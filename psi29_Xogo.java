@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  * @version 0.1
  *
  */
-public class Xogo {
+public class psi29_Xogo {
 
 	//Parámetros do xogo. Engádense algúns por defecto
 	public int numRondas=100;									//Número de rondas por cada partida
@@ -29,11 +29,11 @@ public class Xogo {
 	public boolean comentarios_long=false;						//Activar/Desactivar comentarios longos.
 	
 	//Lista de xogadores e estadísticas dos mesmos.
-	public ArrayList<Xogador> xogadores = new ArrayList<Xogador>();
-	public ArrayList<EstadisticasXogador> estadisticas = new ArrayList<EstadisticasXogador>();
+	public ArrayList<psi29_Xogador> xogadores = new ArrayList<psi29_Xogador>();
+	public ArrayList<psi29_EstadisticasXogador> estadisticas = new ArrayList<psi29_EstadisticasXogador>();
 	
 	//Ventá principal.
-	private Xanela x;
+	private psi29_Xanela x;
 	//private Arbitro arbitro;
 	
 	
@@ -41,20 +41,20 @@ public class Xogo {
 	 * Constructor do xogo, crea a matriz e engade os xogadores iniciais.
 	 * @param x Obxecto coa ventá principal
 	 */
-	public Xogo(Xanela x)
+	public psi29_Xogo(psi29_Xanela x)
 	 {
 		this.x=x;
 		
 		//Creamos a matriz completamente nova.
 		cambiarMatriz(100);
 		
-		Xogador xogador;
-		EstadisticasXogador eXogador;
+		psi29_Xogador xogador;
+		psi29_EstadisticasXogador eXogador;
 		
 		for(int i=0; i<6; i++)
 		 {
-			xogador = new Xogador();
-			eXogador = new EstadisticasXogador(xogador.getId(), xogador.getTipo());
+			xogador = new psi29_Xogador();
+			eXogador = new psi29_EstadisticasXogador(xogador.getId(), xogador.getTipo());
 			xogadores.add(xogador);
 			estadisticas.add(eXogador);
 		 }
@@ -93,7 +93,7 @@ public class Xogo {
 	 */
 	public void borrarXogadores(int[] ids)
 	 {
-		EstadisticasXogador Xog;
+		psi29_EstadisticasXogador Xog;
 		
 		//Eliminamos cada un dos xogadores
  		for(int i=0; i<ids.length; i++)
@@ -106,8 +106,8 @@ public class Xogo {
  		 }
  		
  		//Modificamos a lista e os datos referentes os xogadores na ventá
- 		x.EtiqNXogadores.setText(Xanela.TextNXogadores+estadisticas.size());
-		x.EtiqNPartidas.setText(Xanela.TextNPartidas+coefbin(estadisticas.size(), 2));
+ 		x.EtiqNXogadores.setText(psi29_Xanela.TextNXogadores+estadisticas.size());
+		x.EtiqNPartidas.setText(psi29_Xanela.TextNPartidas+coefbin(estadisticas.size(), 2));
 	 }//borrarXogadores
 
 	/**
@@ -116,7 +116,7 @@ public class Xogo {
 	 */
 	public void resetearXogadores(int[] ids)
 	 {
-		EstadisticasXogador Xog;
+		psi29_EstadisticasXogador Xog;
 		for(int i=0; i<ids.length; i++)
 		 {
 			Xog=estadisticas.get(ids[i]);
@@ -144,7 +144,7 @@ public class Xogo {
  		 {
  			//Preparamos unha mensaxe de confirmación, cos ids de todos os xogadores.
  			String msx="Quere eliminar os seguientes xogadores:<br><ul>";
- 			EstadisticasXogador Xog;
+ 			psi29_EstadisticasXogador Xog;
 			for(int i=0; i<x.ListaXog.getSelectedIndexes().length; i++)
 			 {
 				Xog=estadisticas.get(x.ListaXog.getSelectedIndexes()[i]);
@@ -177,7 +177,7 @@ public class Xogo {
  			val=x.getValor("Novo nome do xogador:","Renomear xogador", estadisticas.get(x.ListaXog.getSelectedIndex()).getNome());
  			if(val==null)
  				return;
- 			EstadisticasXogador Xog;
+ 			psi29_EstadisticasXogador Xog;
  			Xog = estadisticas.get(x.ListaXog.getSelectedIndex());
  			engadirLog("O Xogador ("+Xog.getId()+") con nome "+Xog.getNome()+", cambiouse a "+val, 1);
  			estadisticas.get(x.ListaXog.getSelectedIndex()).setNome(val);
@@ -197,7 +197,7 @@ public class Xogo {
 		 {
 			//Preparamos unha mensaxe de confirmación, cos ids de todos os xogadores.
 			String msx="Quere reiniciar os valores dos xogadores:<br><ul>";
-			EstadisticasXogador Xog;
+			psi29_EstadisticasXogador Xog;
 			for(int i=0; i<x.ListaXog.getSelectedIndexes().length; i++)
 			 {
 				Xog=estadisticas.get(x.ListaXog.getSelectedIndexes()[i]);
@@ -263,7 +263,7 @@ public class Xogo {
  				//Actualiza o parámetro tanto no sistema coma na ventá.
  				engadirLog("Cambiouse o número de rondas por partida de "+numRondas+" a "+tam, 1);
  				numRondas=tam;
- 				x.EtiqNRondas.setText(Xanela.TextNRondas+numRondas);
+ 				x.EtiqNRondas.setText(psi29_Xanela.TextNRondas+numRondas);
  			 }
  		 }
  		catch(NumberFormatException nfe)
@@ -294,7 +294,7 @@ public class Xogo {
  				//Actualiza o parámetro tanto no sistema coma na ventá.
  				engadirLog("Cambiouse o número de rondas para que cambia a matriz, de "+numCambMatriz+" a "+tam, 1);
  				numCambMatriz=tam;
- 				x.EtiqNCamMatriz.setText(Xanela.TextNCamMatriz+tam);
+ 				x.EtiqNCamMatriz.setText(psi29_Xanela.TextNCamMatriz+tam);
  			 }
  		 }
  		catch(NumberFormatException nfe)
@@ -323,7 +323,7 @@ public class Xogo {
  				//Actualiza o parámetro tanto no sistema coma na ventá.
  				engadirLog("O porcentaxe de cambio da matriz pasou do "+porCambMatriz+"% a "+tam+"%", 1);
  				porCambMatriz=tam;
- 				x.EtiqPCamMatriz.setText(Xanela.TextPCamMatriz+tam+"%");
+ 				x.EtiqPCamMatriz.setText(psi29_Xanela.TextPCamMatriz+tam+"%");
  			 }
  		 }
  		catch(NumberFormatException nfe)

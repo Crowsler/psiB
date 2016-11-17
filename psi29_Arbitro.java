@@ -9,7 +9,7 @@ import jade.lang.acl.ACLMessage;
  * @version 0.1
  *
  */
-public class Arbitro extends Agent {
+public class psi29_Arbitro extends Agent {
 
 	
 	class EmisorComportaminento extends SimpleBehaviour

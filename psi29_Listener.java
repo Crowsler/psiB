@@ -19,17 +19,17 @@ import javax.swing.JOptionPane;
  * @version 0.1
  *
  */
-public class Listener implements ActionListener, WindowListener, ItemListener {
+public class psi29_Listener implements ActionListener, WindowListener, ItemListener {
 
-	Xanela x;
-	Xogo xogo;
+	psi29_Xanela x;
+	psi29_Xogo xogo;
 	
 	/**
 	 * Constructor do listener
 	 * @param x: Ventá principal.
 	 * @param xogo: Xogo.
 	 */
-	public Listener(Xanela x, Xogo xogo)
+	public psi29_Listener(psi29_Xanela x, psi29_Xogo xogo)
 	 {
 		this.x=x;
 		this.xogo=xogo;
@@ -77,8 +77,8 @@ public class Listener implements ActionListener, WindowListener, ItemListener {
 		 		
 		 	//En caso de about utilizamos unha ventá de java swing para mostrar os datos da aplicación e o autor.
 		 	case "about":
-		 		String mensaje="<html><body color='white'><h1><center>"+GUI.nomeAPP+"</center></h1><h4 align='right'>Version "+GUI.versionAPP+"</h4><br>"
-		 				+ "<center>Author: "+GUI.autorAPP+" <span color='green'>&nbsp;&nbsp;"+GUI.mailAutorAPP+"</span></center><br>"
+		 		String mensaje="<html><body color='white'><h1><center>"+psi29_GUI.nomeAPP+"</center></h1><h4 align='right'>Version "+psi29_GUI.versionAPP+"</h4><br>"
+		 				+ "<center>Author: "+psi29_GUI.autorAPP+" <span color='green'>&nbsp;&nbsp;"+psi29_GUI.mailAutorAPP+"</span></center><br>"
 		 				+ "<center>©  2016 &nbsp;&nbsp;&nbsp;&nbsp;Compuglobalhypermeganet, S.L.</center><br><br></body></html>";
 		 		JOptionPane.showMessageDialog(x, mensaje, "About", JOptionPane.DEFAULT_OPTION);
 		 	break;

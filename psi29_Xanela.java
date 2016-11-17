@@ -37,7 +37,7 @@ import javax.swing.UIManager;
  *
  */
 @SuppressWarnings("serial")
-public class Xanela extends Frame {
+public class psi29_Xanela extends Frame {
 	
 	//Parámetros fixos da venta
 	private final static int xanelaAncho = 950;
@@ -52,7 +52,7 @@ public class Xanela extends Frame {
 	public final static String TextPCamMatriz = "Cambio matriz: ";
 	public final static Color ColorTablaPVP = Color.DARK_GRAY;
 	
-	private Listener escoita; //Obxecto listener
+	private psi29_Listener escoita; //Obxecto listener
 	
 	//Obxectos da ventá que serán modificados dende outras clases.
 	public List ListaXog;
@@ -66,15 +66,15 @@ public class Xanela extends Frame {
 	 * Constructor principal da clase
 	 * Crea a xanela cos botóns, parámetros, etc.
 	 */
-	public Xanela()
+	public psi29_Xanela()
 	 {
-		super(GUI.nomeAPP);
+		super(psi29_GUI.nomeAPP);
 		
 		//Inicializamos o xogo. (Parámetros iniciais do xogo e lóxica do mesmo)
-		Xogo xogo = new Xogo(this);
+		psi29_Xogo xogo = new psi29_Xogo(this);
 		
 		//Iniciamos o listener.
-		escoita = new Listener(this, xogo);
+		escoita = new psi29_Listener(this, xogo);
 		addWindowListener(escoita);
 				
 		
@@ -279,7 +279,7 @@ public class Xanela extends Frame {
 		gBC.weightx = 1;
 		gBC.weighty = 0;
 		gBC.gridheight = 1;
-		gBC.gridwidth = 6;
+		gBC.gridwidth = 4;
 		gBC.insets = new Insets (2,2,1,2);
 		oPanel.add(titulo_pvp, gBC);
 		
@@ -290,8 +290,8 @@ public class Xanela extends Frame {
 		xog1_pvp.setBackground(ColorTablaPVP);
 		
 		gBC.gridx = 0;
-		gBC.gridy = 1;
-		gBC.gridwidth = 3;
+		gBC.gridy = 2;
+		gBC.gridwidth = 1;
 		gBC.insets = new Insets (1,2,1,1);
 		oPanel.add(xog1_pvp, gBC);
 	
@@ -301,100 +301,87 @@ public class Xanela extends Frame {
 		xog2_pvp.setAlignment(Label.CENTER);
 		xog2_pvp.setBackground(ColorTablaPVP);
 		
-		gBC.gridx = 3;
-		gBC.gridy = 1;
-		gBC.gridwidth = 3;
-		gBC.insets = new Insets (1,1,1,2);
+		gBC.gridx = 0;
+		gBC.gridy = 3;
+		gBC.gridwidth = 1;
+		gBC.insets = new Insets (1,2,2,1);
 		oPanel.add(xog2_pvp, gBC);
 		
 
 		//Titulos
-		l = new Label("Gañadas");
-		l.setAlignment(Label.CENTER);
+		l = new Label("");
 		l.setBackground(ColorTablaPVP);
 		gBC.gridx = 0;
-		gBC.gridy = 3;
+		gBC.gridy = 1;
 		gBC.gridwidth = 1;
 		gBC.insets = new Insets (1,2,1,1);
 		oPanel.add(l, gBC);
 		
-		l = new Label("Perdidas");
+		l = new Label("Gañadas");
 		l.setAlignment(Label.CENTER);
 		l.setBackground(ColorTablaPVP);
 		gBC.gridx = 1;
+		gBC.gridy = 1;
+		gBC.gridwidth = 1;
 		gBC.insets = new Insets (1,1,1,1);
 		oPanel.add(l, gBC);
-
-		l = new Label("Pagado");
+		
+		l = new Label("Perdidas");
 		l.setAlignment(Label.CENTER);
 		l.setBackground(ColorTablaPVP);
 		gBC.gridx = 2;
 		gBC.insets = new Insets (1,1,1,1);
 		oPanel.add(l, gBC);
-		
-		l = new Label("Gañadas");
-		l.setAlignment(Label.CENTER);
-		l.setBackground(ColorTablaPVP);
-		gBC.gridx = 3;
-		gBC.insets = new Insets (1,1,1,1);
-		oPanel.add(l, gBC);
-		
-		l = new Label("Perdidas");
-		l.setAlignment(Label.CENTER);
-		l.setBackground(ColorTablaPVP);		
-		gBC.gridx = 4;
-		gBC.insets = new Insets (1,1,1,1);
-		oPanel.add(l, gBC);
 
 		l = new Label("Pagado");
 		l.setAlignment(Label.CENTER);
 		l.setBackground(ColorTablaPVP);
-		gBC.gridx = 5;
+		gBC.gridx = 3;
 		gBC.insets = new Insets (1,1,1,2);
 		oPanel.add(l, gBC);
-		
 		
 		//Datos xogadores
 		xog1_g_pvp = new Label("0");
 		xog1_g_pvp.setAlignment(Label.CENTER);
 		xog1_g_pvp.setBackground(ColorTablaPVP);
-		gBC.gridx = 0;
-		gBC.gridy = 4;
-		gBC.insets = new Insets (1,2,2,1);
+		gBC.gridx = 1;
+		gBC.gridy = 2;
+		gBC.insets = new Insets (1,1,1,1);
 		oPanel.add(xog1_g_pvp, gBC);
 		
 		xog1_p_pvp = new Label("0");
 		xog1_p_pvp.setAlignment(Label.CENTER);
 		xog1_p_pvp.setBackground(ColorTablaPVP);
-		gBC.gridx = 1;
-		gBC.insets = new Insets (1,1,2,1);
+		gBC.gridx = 2;
+		gBC.insets = new Insets (1,1,1,1);
 		oPanel.add(xog1_p_pvp, gBC);
 
 		xog1_pag_pvp = new Label("0");
 		xog1_pag_pvp.setAlignment(Label.CENTER);
 		xog1_pag_pvp.setBackground(ColorTablaPVP);
-		gBC.gridx = 2;
-		gBC.insets = new Insets (1,1,2,1);
+		gBC.gridx = 3;
+		gBC.insets = new Insets (1,1,1,2);
 		oPanel.add(xog1_pag_pvp, gBC);
 		
 		xog2_p_pvp = new Label("0");
 		xog2_p_pvp.setAlignment(Label.CENTER);
 		xog2_p_pvp.setBackground(ColorTablaPVP);
-		gBC.gridx = 3;
-		gBC.insets = new Insets (1,1,2,1);
+		gBC.gridx = 1;
+		gBC.gridy = 3;
+		gBC.insets = new Insets (1,1,1,1);
 		oPanel.add(xog2_p_pvp, gBC);
 		
 		xog2_g_pvp = new Label("0");
 		xog2_g_pvp.setAlignment(Label.CENTER);
 		xog2_g_pvp.setBackground(ColorTablaPVP);		
-		gBC.gridx = 4;
-		gBC.insets = new Insets (1,1,2,1);
+		gBC.gridx = 2;
+		gBC.insets = new Insets (1,1,1,1);
 		oPanel.add(xog2_g_pvp, gBC);
 
 		xog2_pag_pvp = new Label("0");
 		xog2_pag_pvp.setAlignment(Label.CENTER);
 		xog2_pag_pvp.setBackground(ColorTablaPVP);
-		gBC.gridx = 5;
+		gBC.gridx = 3;
 		gBC.insets = new Insets (1,1,2,2);
 		oPanel.add(xog2_pag_pvp, gBC);
 		
@@ -462,7 +449,7 @@ public class Xanela extends Frame {
 		oPanel.add(EtiqNXogadores);
 		EtiqNRondas = new Label(TextNRondas+xogo.numRondas);
 		oPanel.add(EtiqNRondas);
-		EtiqNPartidas = new Label(TextNPartidas+Xogo.coefbin(xogo.xogadores.size(), 2));
+		EtiqNPartidas = new Label(TextNPartidas+psi29_Xogo.coefbin(xogo.xogadores.size(), 2));
 		oPanel.add(EtiqNPartidas);
 		EtiqPCamMatriz = new Label(TextPCamMatriz+xogo.porCambMatriz+"%");
 		oPanel.add(EtiqPCamMatriz);

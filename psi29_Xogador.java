@@ -15,7 +15,7 @@ import jade.lang.acl.ACLMessage;
  *
  */
 
-public class Xogador {
+public class psi29_Xogador {
 
 	private int Id;
 	private static String Tipo="Fijo";
@@ -27,7 +27,7 @@ public class Xogador {
 	/**
 	 * Constructor do xogador. O id de este calculase do hash do obxecto
 	 */
-	public Xogador()
+	public psi29_Xogador()
 	 {
 		Id = this.hashCode();
 	 }//Xogador
@@ -129,6 +129,5 @@ public class Xogador {
     {
         addBehaviour(new ReceptorComportaminento());
     }*/
-
 	
-}
+}//Clase Xogador

@@ -7,7 +7,7 @@
  * @version 0.1
  *
  */
-public class EstadisticasXogador {
+public class psi29_EstadisticasXogador {
 
 	private int Id;
 	private String Nome;
@@ -22,7 +22,7 @@ public class EstadisticasXogador {
 	 * @param Id: Identificador do xogodaor.
 	 * @param Tipo: String co tipo de Xogador, o iniciar o xogo este tamén sera o seu nome.
 	 */
-	public EstadisticasXogador(int Id, String Tipo)
+	public psi29_EstadisticasXogador(int Id, String Tipo)
 	 {
 		this.Id = Id;
 		this.Nome = Tipo;

@@ -8,7 +8,7 @@
  * @version 0.1
  *
  */
-public class GUI
+public class psi29_GUI
  {
 	//Datos da aplicación
 	public final static String nomeAPP="NOMBRE";
@@ -22,7 +22,7 @@ public class GUI
 	 */
 	public static void main(String[] args)
 	 {
-		new Xanela();
+		new psi29_Xanela();
 	 } //main
 	
 
