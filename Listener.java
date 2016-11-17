@@ -24,17 +24,26 @@ public class Listener implements ActionListener, WindowListener, ItemListener {
 	Xanela x;
 	Xogo xogo;
 	
+	/**
+	 * Constructor do listener
+	 * @param x: Ventá principal.
+	 * @param xogo: Xogo.
+	 */
 	public Listener(Xanela x, Xogo xogo)
 	 {
 		this.x=x;
 		this.xogo=xogo;
-	 }
+	 }//Listener
+	
 	
 	// Métodos da interfaz WindowsListener
 	@Override
 	public void windowOpened(WindowEvent e) {}
 
 	@Override
+	/**
+	 * Método que pecha a ventá cando se pulsa na "X"
+	 */
 	public void windowClosing(WindowEvent e)
 	 {
 		x.dispose(); //Pecha a ventá
@@ -76,18 +85,21 @@ public class Listener implements ActionListener, WindowListener, ItemListener {
 		 	case "new":
 		 		xogo.engadirLog("NOVO XOGO", 1);
 		 	break;
+		 	//En caso de stop cambiamos o listener e o label do botón a Start
 		 	case "stop":
 		 		x.ButStartStop.setLabel("Start");
 		 		x.ButStartStop.setActionCommand("start");
 		 		x.MenStartStop.setActionCommand("start");
 		 		xogo.engadirLog("STOP", 1);
 		 	break;
+		 	//En caso de start cambiamos o listener e o label do botón a Stop
 		 	case "start":
 		 		x.ButStartStop.setLabel("Stop");
 		 		x.ButStartStop.setActionCommand("stop");
 		 		x.MenStartStop.setActionCommand("stop");
 		 		xogo.engadirLog("START", 1);
 		 	break;
+		 	//No resto dos casos chamamos a función do xogo correspodente a cada listener.
 		 	case "rnPlayer":
 		 		xogo.renameXogadoresSelect();
 		 	break;
@@ -117,12 +129,13 @@ public class Listener implements ActionListener, WindowListener, ItemListener {
 		 		x.mostrarMensaxeError("Esta función todavia está por implementar");
 		 	break;
 		 }
-	}
+	}//actionPerformed
 	
 	@Override
 	public void itemStateChanged(ItemEvent e) {
 		switch(e.getItem().toString())
 		 {
+			//Cambia o estado do boolean dos comentarios
 			case "Comentarios On/Off":
 				if(e.getStateChange()==1)
 					xogo.comentarios=true;
@@ -140,7 +153,4 @@ public class Listener implements ActionListener, WindowListener, ItemListener {
 		 }
 	}
 	
-	
-
-	
-}
+}//Clase Listener

@@ -1,16 +1,21 @@
-
+/*
 import jade.core.Agent;
 import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
+*/
 
 /**
+ * 
+ * Xogador, será cada axente que xogue o xogo.
+ * Este será de varios tipos. (Fixo, Random, Intelixente)
+ * Calculará o movemento adecuado e intercambiará os mensaxes co arbitro do xogo.
  * 
  * @author Bruno Nogareda Da Cruz, brunonogareda@gmail.com
  * @version 0.1
  *
  */
-@SuppressWarnings("serial")
-public class Xogador extends Agent {
+
+public class Xogador {
 
 	private int Id;
 	private static String Tipo="Fijo";
@@ -19,12 +24,18 @@ public class Xogador extends Agent {
 	private int PagoParcial=0;
 	private int PagoTotal=0;
 	
-	
+	/**
+	 * Constructor do xogador. O id de este calculase do hash do obxecto
+	 */
 	public Xogador()
 	 {
 		Id = this.hashCode();
-	 }	
+	 }//Xogador
 
+	
+	/*------------------------------------------------------
+	   ------------  Getters e setters da clase ------------
+	   -----------------------------------------------------*/
 	public int getPagoParcial() {
 		return PagoParcial;
 	}
@@ -69,21 +80,28 @@ public class Xogador extends Agent {
 		Perdidas = perdidas;
 	}
 	
+	/**
+	 * Pon a cero todas as estadisticas do xogador
+	 */
 	public void reiniciarXogador()
 	 {
 		Gañadas=0;
 		Perdidas=0;
 		PagoParcial=0;
 		PagoTotal=0;
-	 }
+	 }//reiniciarXogador
 
-	
+	/**
+	 * Escolle a xogada (En este caso un fixo)
+	 * @param tamMatiz tamaño da matriz do xogo
+	 * @return Devolve un int coa (columna/fila) que escolliu
+	 */
 	public int xogada(int tamMatiz)
 	 {
 		return 0;
-	 }
+	 }//xogada
 	
-	
+	/*
 	class ReceptorComportaminento extends SimpleBehaviour
     {
             private boolean fin = false;
@@ -110,7 +128,7 @@ public class Xogador extends Agent {
     protected void setup()
     {
         addBehaviour(new ReceptorComportaminento());
-    }
+    }*/
 
 	
 }

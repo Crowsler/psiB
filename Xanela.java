@@ -538,7 +538,7 @@ public class Xanela extends Frame {
 	 }//main
 	
 	/**
-	 * Mostrá unha ventá con un mensaxe de erro por pantalla.
+	 * Mostra unha ventá con un mensaxe de erro por pantalla.
 	 * @param msx: mensaxe que se quere mostrar
 	 */
 	public void mostrarMensaxeError(String msx)
@@ -547,7 +547,7 @@ public class Xanela extends Frame {
 	 }//mostrarMensaxeError
 	
 	/**
-	 * 
+	 * Mostra unha ventá con un mensaxe e un textBox, onde se pode escribir.
 	 * @param msx: mensaxe que se quere mostrar
 	 * @param titulo: título da ventá que se mostrará
 	 * @param valor_ant: Valor anterior do dato que se quere solicitar (O que se mostra por defecto no textBox)
@@ -561,7 +561,7 @@ public class Xanela extends Frame {
 	
 	
 	/**
-	 * 
+	 * Mostra unha ventá con unha mesaxe de confirmación.
 	 * @param msx: mensaxe que se quere mostrar
 	 * @param titulo: título da ventá que se mostrará
 	 * @return Retorna un número según a opción que foi seleccionada.
