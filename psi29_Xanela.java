@@ -387,7 +387,7 @@ public class psi29_Xanela extends Frame {
 		
 		
 		oPanel.setForeground(Color.WHITE);
-		oPanel.setBackground(Color.WHITE);
+		oPanel.setBackground(Color.ORANGE);
 		
 		//Parámetros para a colocación do panel de datos
 		gBC = new GridBagConstraints();
