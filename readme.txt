@@ -26,6 +26,8 @@ ______________________________________________________________________________
 
 	  * Juego a completar: Selecciona de manera aleatoria una Fila/Columna que esté pendiente de completar.
 
+	  * Juego conservador: Selecciona la fila/columna que esté completa en la que nunca perdamos.
+
 	  * Estrategia MaxMin: Estrategia MaxMin clásica. Escoge la posición en la que su cobro mínimo sea el mayor posible.
 
 	  * Estrategia MinMax: Estrategia MinMax clásica. Escoge la posición donde el pago máximo al oponente sea lo menor posible.
@@ -41,7 +43,21 @@ ______________________________________________________________________________
 	Cada vez que recibimos un resultado nuevo, se actualiza la matriz, así como los parámetros de cada fila/columna para el cálculo de las estrategias.
 	Cada vez que se cambia la matriz, se reinicia por completo si este cambio supera un porcentaje establecido fijo (85%).
 
-	Si vamos perdiendo: En caso de haber perdido las últimas N rondas activaremos un juego cíclico, donde realizaremos rotaciones entre las diferentes estrategias hasta que encontremos una en la que ganemos una ronda. Si aún así perdemos 2*N rondas, empezamos a jugar de forma aleatoria. En otro caso analizamos si el otro jugador está repitiendo una jugada 
+	Después de realizar un juego en ataque hemos perdido aumentaremos en una unidad la N de repeticiones y si ganamos la disminiumos hasta llegar a un mínimo de ventana de repetición.
+	
+	Si vamos perdiendo: 
+	   * En caso de haber perdido las últimas N rondas activaremos un juego cíclico, donde realizaremos rotaciones entre las diferentes estrategias hasta que encontremos una en la que ganemos una ronda. Si aún así perdemos 2*N rondas, empezamos a jugar de forma aleatoria.
+	   * En otro caso analizamos si el otro jugador está repitiendo una jugada mas de N veces, activaremos el juego en ataque, que escogerá la posición que mas nos favorezca para esa Fila/Columna en concreto, siempre que la posición que nos favorezca tenga una diferencia de payoff superior a cero, en otro caso jugamos a completar.
+	   * Si no ocurre ninguna de estas situaciones (vamos perdiendo, pero no perdimos muchas rondas seguidas), jugaremos un juego Dominante 1.
+
+	Si vamos ganando: 
+	   * Si no van a suceder mas cambios en la matriz, y existe alguna fila/columna completa en la que la diferencia de payoff mínima multiplicada por el número de rondas pendientes no supera la diferencia de payoff de los jugadores, en este caso activamos el juego seguro para esta fila/columna. Esto nos garantiza que pase lo que pase ganaremos la partida (aunque puede acortarse notablemente la diferencia de payoff).
+	   * Si existe una fila/columna en la que nunca perdamos y conozcamos más de la mitad de la matriz se jugará esta (Esto implica un juego dominante2).
+	   * Si existe una fila/columna en la que nunca perdamos y conozcamos por completo activaremos el juego conservador.
+	   * Comprobamos si el oponente repite alguna jugada y en caso afirmativo activamos el juego en Ataque.
+	   * Si la diferencia de payoff (Con el oponente) es muy baja, activamos el juego MinMaxDiff (Jungando así una Fila/Columna donde las pérdidas en diferencia de payoff sean mínimas).
+	   * Si aún quedan filas/columnas incompletas habilitamos juego a completar, salvo que perdamos en mas de 2 posiciónes y esté pendiente de descubrir mas de la mitad de la Fila/Columna que jugamos estrategia dominante 2.
+	   * Finalmente en otro caso cualquiera activamos la estrategia dominante 1.
 
 ______________________________________________________________________________
 

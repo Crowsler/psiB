@@ -52,7 +52,7 @@ public class psi29_ColumRow{
 	 * @param ColumRow ArrayList dos parámetros Filas/Columnas
 	 * @return ArrayList de Filas/Columnas imcompletas
 	 */
-	public static ArrayList<psi29_ColumRow> ColumRowImComplete(ArrayList<psi29_ColumRow> ColumRow) {
+	public static ArrayList<psi29_ColumRow> ColumRowInComplete(ArrayList<psi29_ColumRow> ColumRow) {
 		
 		ArrayList<psi29_ColumRow> ret = new ArrayList<psi29_ColumRow>();
 		

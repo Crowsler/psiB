@@ -90,13 +90,5 @@ public class psi29_HistXogadas {
 			}
 		}
 		return contador;
-	}//fin vecesPerdidasEn
-	
-	public static int EstadoDeHistorico() {
-
-		
-		
-		return -1;
-	}
-	
+	}//fin vecesPerdidasEn	
 }

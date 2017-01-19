@@ -22,6 +22,7 @@ public class psi29_Intel1 extends psi29_Fixed {
 	public static final int XogoSeguro = 2;
 	public static final int XogoAtaque = 3;
 	public static final int XogoCompletar = 4;
+	public static final int XogoConservador = 5;
 	public static final int XogoMaxMin = 10;
 	public static final int XogoMinMax = 11;
 	public static final int XogoDominante1 = 12;
@@ -44,6 +45,7 @@ public class psi29_Intel1 extends psi29_Fixed {
 	private int tipoXogo;			//Determina o tipo de xogo que iremos realizar
 	private int posXogadaAtaque;	//Esta será a posición que se decidirá xogar en caso de XogoAtaque.
 	private int posXogadaSeguro;	//Esta será a posición que se decidirá xogar en caso de XogoSeguro.
+	private int posXogoConservador;	//Esta será a posición que se decidirá xogar en caso de XogoConservador.
 	private int contXogadaCiclica;	//Conta as veces seguidas que levamos realizando unha xogada Cíclica.
 	
 	ArrayList<psi29_ColumRow> listColumRow = new ArrayList<psi29_ColumRow>();
@@ -88,7 +90,12 @@ public class psi29_Intel1 extends psi29_Fixed {
 				
 			case XogoAtaque:
 				ret = getMellor(posXogadaAtaque);
-				printMSX("El tio repite demasiado la pos. "+posXogadaAtaque+" lo ataco por aquí "+ret);
+				printMSX("O opoñente repite a posición: "+posXogadaAtaque+" ataco por aquí "+ret);
+				break;
+				
+			case XogoConservador:
+				ret = posXogoConservador;
+				printMSX("Xogo de forma conservadora: "+ret);
 				break;
 				
 			case XogoMaxMin:
@@ -268,7 +275,7 @@ public class psi29_Intel1 extends psi29_Fixed {
 			}
 			else if(numMaisRepetidoContrincante>=0) {//Comprobamos se o opoñente repite unha xogada. (Sempre que non levemos perdidas deamsiadas)
 				psi29_ColumRow xogContr = psi29_ColumRow.getColumRowByPosition(listColumRow, numMaisRepetidoContrincante);
-				if(xogContr.maxDiffPayoff==0 && !xogContr.isComplete(tamMatriz)) {//Se o contrincante repite unha Fila/Columna que está imcompleta completamos Matriz
+				if(xogContr.maxDiffPayoff==0 && !xogContr.isComplete(tamMatriz)) {//Se o contrincante repite unha Fila/Columna que está incompleta completamos Matriz
 					tipoXogo = XogoCompletar;
 				}
 				else {
@@ -292,12 +299,8 @@ public class psi29_Intel1 extends psi29_Fixed {
 			
 		}
 		else {	//Vou gañando
-			if(numRondasPendentes<numCambMatriz) {		//Non vai haber mais cambios de matriz
-				
-//				//Se xa está activo o XogoSeguro, podemos seguir con el, xa que non houbo ningún cambio.
-//				if(tipoXogo==XogoSeguro)
-//					return;
-				
+			if(numRondasPendentes<numCambMatriz || numCambMatriz==0 || porCambMatriz==0) {		//Non vai haber mais cambios de matriz
+								
 				//Se imos gañando e a matriz non vai ter mais cambios, buscamos se existe algunha fila cuya diferencia de payoff máximo
 				//sexa inferior a diferencia de payofftotal entre o numero de rondas pendentes (Ademais de que esta fila/Columna estea completa)
 				//Se o encontramolo xogaremos esa Fila/Columna desta maneira asegurámos a victoria en esta Partida.
@@ -337,16 +340,13 @@ public class psi29_Intel1 extends psi29_Fixed {
 				ArrayList<psi29_ColumRow> completos;
 				completos = psi29_ColumRow.ColumRowComplete(listColumRow);
 				for(int i=0; i<completos.size(); i++) {
-					if(completos.get(i).posganhadas==tamMatriz-1){
-						tipoXogo = XogoDominante2;
+					if(completos.get(i).posPerdidas==0){
+						tipoXogo = XogoConservador;
+						posXogoConservador = completos.get(i).posColRow;
 						return;
 					}
 						
 				}
-				
-				
-				
-				
 			
 				//Comprobamos se o opoñente repite unha xogada.
 				int numMaisRepetidoContrincante = psi29_HistXogadas.numMaisRepetido(histXogadas, tamMatriz, 85);
@@ -356,31 +356,30 @@ public class psi29_Intel1 extends psi29_Fixed {
 				}
 				else { //Non hai xogo en ataque
 					
-					//Se existe unha posición que nunca perdamos xogamos esa.
-					if(Collections.max(listColumRow, new psi29_CompareGanhadas()).posganhadas >= tamMatriz-1) {
-						tipoXogo = XogoDominante2;
-						return;
-					}
+//					//Se existe unha posición que nunca perdamos xogamos esa.
+//					if(Collections.max(listColumRow, new psi29_CompareGanhadas()).posganhadas >= tamMatriz-1) {
+//						tipoXogo = XogoDominante2;
+//						return;
+//					}
 					
 					
+					//Se a diferencia de payoff é moi baixa, xogamos a Fila/Columna onde arrisquemos menos o payoff
 					if(diffPayoff<diffPayoffRiesgo) {
 						tipoXogo = XogoMinMaxDiff;
 						return;
 					}
 					
 					
-					ArrayList<psi29_ColumRow> imcompletos;
-					imcompletos = psi29_ColumRow.ColumRowImComplete(listColumRow);
+					ArrayList<psi29_ColumRow> incompletos;
+					incompletos = psi29_ColumRow.ColumRowInComplete(listColumRow);
 					
-					//Se existen posicións sen completar buscamos 
-					if(imcompletos.size()>0) {
-						//A parte aleatoria non é moi efectiva. Se comezamos a buscar de maneira aleatoria é coincide que xogamos posicións que perdemos
+					if(incompletos.size()>0) {
+						//Parte problemática. Se comezamos a buscar de maneira aleatoria é coincide que xogamos posicións que perdemos
 						//en caso de que exista unha fila donde nunca se perde, non poderemos recuperar as victorias.
-						//TODO Deberemos estudiar o xogo para ver se nos interesa arriesgarnos a buscar ou non.
-						psi29_ColumRow MaisGanhadasImcompletos = Collections.max(imcompletos, new psi29_CompareGanhadas());
-						if(MaisGanhadasImcompletos.posPerdidas<=1 && MaisGanhadasImcompletos.posComplete>tamMatriz/2)
+						psi29_ColumRow MaisGanhadasIncompletos = Collections.max(incompletos, new psi29_CompareGanhadas());
+						if(MaisGanhadasIncompletos.posPerdidas<=1 && MaisGanhadasIncompletos.posComplete>tamMatriz/2)
 							tipoXogo = XogoDominante2;
-						else {
+						else {		//Se existen posicións sen completar buscamos 
 							tipoXogo = XogoCompletar;
 						}
 					 }
@@ -565,10 +564,10 @@ public class psi29_Intel1 extends psi29_Fixed {
 	
 	
 	public int getCompletar() {
-		ArrayList<psi29_ColumRow> imcompletos;
-		imcompletos = psi29_ColumRow.ColumRowImComplete(listColumRow);
-		if(imcompletos.size()>0)
-			return imcompletos.get(rand.nextInt(imcompletos.size())).posColRow;
+		ArrayList<psi29_ColumRow> incompletos;
+		incompletos = psi29_ColumRow.ColumRowInComplete(listColumRow);
+		if(incompletos.size()>0)
+			return incompletos.get(rand.nextInt(incompletos.size())).posColRow;
 		else {
 			printMSX("Esto non deberia pasar. Solicitase completar a matriz pero está completa");
 			return 0;
