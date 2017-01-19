@@ -1,6 +1,6 @@
-# Juego en java con inteligencia Artificial.
+# NeoMatrix (Juego en java con inteligencia Artificial)
 
-- [Descripción](#descripcion)
+- [Descripción](#descripción)
 - [Autor](#autor)
 - [Cuenta](#cuenta)
 - [Compilar/Ejecutar](#compilar-ejecutar)
@@ -8,15 +8,19 @@
 - [Funcionalidades adicionales](#funcionalidades-adicionales)
 - [Comentarios generales](#comentarios-generales)
 
-## Descripcion
+
+## Descripción 
 
 Juego realizado para el grupoB de la asignatura programación de sistemas inteligentes. Utilizando la libreria Jade, una serie de agentes (jugadores y un maestro), intercambian mensajes ACL, donde los jugadores seleccionan columnas y filas de una matriz para obtener el mayor valor de esta y ganar el juego a los demás. Los valores de la matriz son desconocidos para los jugadores.
+
 
 ## Autor
 > Bruno Nogareda Da Cruz <brunonogareda@gmail.com>
 
+
 ## Cuenta
 > psi29
+
 
 ## Compilar Ejecutar
 
@@ -65,17 +69,17 @@ Cada vez que se cambia la matriz, se reinicia por completo si este cambio supera
 
 Después de realizar un juego en ataque hemos perdido aumentaremos en una unidad la N de repeticiones y si ganamos la disminiumos hasta llegar a un mínimo de ventana de repetición.
 	
-### **Si vamos perdiendo:**
+##### **Si vamos perdiendo:**
 
-* En caso de haber perdido las últimas N rondas activaremos un juego cíclico, donde realizaremos rotaciones entre las diferentes estrategias hasta que encontremos una en la que ganemos una ronda. Si aún así perdemos 2*N rondas, empezamos a jugar de forma aleatoria.
+ * En caso de haber perdido las últimas N rondas activaremos un juego cíclico, donde realizaremos rotaciones entre las diferentes estrategias hasta que encontremos una en la que ganemos una ronda. Si aún así perdemos 2*N rondas, empezamos a jugar de forma aleatoria.
 
-* En otro caso analizamos si el otro jugador está repitiendo una jugada mas de N veces, activaremos el juego en ataque, que escogerá la posición que mas nos favorezca para esa Fila/Columna en concreto, siempre que la posición que nos favorezca tenga una diferencia de payoff superior a cero, en otro caso jugamos a completar.
+ * En otro caso analizamos si el otro jugador está repitiendo una jugada mas de N veces, activaremos el juego en ataque, que escogerá la posición que mas nos favorezca para esa Fila/Columna en concreto, siempre que la posición que nos favorezca tenga una diferencia de payoff superior a cero, en otro caso jugamos a completar.
 
-* Si no ocurre ninguna de estas situaciones (vamos perdiendo, pero no perdimos muchas rondas seguidas), jugaremos un juego Dominante1.
+ * Si no ocurre ninguna de estas situaciones (vamos perdiendo, pero no perdimos muchas rondas seguidas), jugaremos un juego Dominante1.
 
-### **Si vamos ganando:**
+##### **Si vamos ganando:**
 
-* Si no van a suceder mas cambios en la matriz, y existe alguna fila/columna completa en la que la diferencia de payoff mínima multiplicada por el número de rondas pendientes no supera la diferencia de payoff de los jugadores, en este caso activamos el juego seguro para esta fila/columna. Esto nos garantiza que pase lo que pase ganaremos la partida (aunque puede acortarse notablemente la diferencia de payoff).
+ * Si no van a suceder mas cambios en la matriz, y existe alguna fila/columna completa en la que la diferencia de payoff mínima multiplicada por el número de rondas pendientes no supera la diferencia de payoff de los jugadores, en este caso activamos el juego seguro para esta fila/columna. Esto nos garantiza que pase lo que pase ganaremos la partida (aunque puede acortarse notablemente la diferencia de payoff).
 
  * Si existe una fila/columna en la que nunca perdamos y conozcamos más de la mitad de la matriz se jugará esta (Esto implica un juego dominante2).
 
@@ -89,7 +93,6 @@ Después de realizar un juego en ataque hemos perdido aumentaremos en una unidad
  
  * Finalmente en otro caso cualquiera activamos la estrategia dominante 1.
 
-______________________________________________________________________________
 
 ## Funcionalidades adicionales
 
@@ -99,8 +102,7 @@ ______________________________________________________________________________
 * Podemos eliminar jugadores que se registraron, pero que no nos interesa que jueguen.
 * Desde la propia interfaz, también podremos cambiar el tamaño de la matriz, las rondas que pasan para que esta se modifique y el porcentaje de cambio de la misma.
 * Si nos interesa tenemos la opción de limpeza de log, que elimina todos los comentarios de este cuadro y lo deja en blanco.
-	
-______________________________________________________________________________
+
 
 ## Comentarios generales
 
