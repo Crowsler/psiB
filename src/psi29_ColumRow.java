@@ -236,12 +236,12 @@ public class psi29_ColumRow{
 		ret+=posPerdidas;
 		ret+=", ";
 		ret+=maxDiffPayoff;
-		ret+=", ";
-		ret+=posMaxDiffPayoff;
+//		ret+=", ";
+//		ret+=posMaxDiffPayoff;
 		ret+=", ";
 		ret+=minDiffPayoff;
-		ret+=", ";
-		ret+=posMinDiffPayoff;
+//		ret+=", ";
+//		ret+=posMinDiffPayoff;
 		ret+=", ";
 		ret+=minCobro;
 		ret+=", ";

@@ -15,7 +15,7 @@ import java.util.Random;
  *
  */
 @SuppressWarnings("serial")
-public class psi29_Intelx extends psi29_Fixed {
+public class psi29_Intel1 extends psi29_Fixed {
 
 	//Tipos de xogo
 	public static final int XogoAleatorio = 1;
@@ -26,18 +26,24 @@ public class psi29_Intelx extends psi29_Fixed {
 	public static final int XogoMinMax = 11;
 	public static final int XogoDominante1 = 12;
 	public static final int XogoDominante2 = 13;
-	public static final int XogoMaxMinDiff = 14;
+	public static final int XogoMaxMaxDiff = 14;
 	public static final int XogoMinMaxDiff = 15;
 	
-	public static final int ultimaXogadaCiclica = 15;
+	private static final int ultimaXogadaCiclica = 15;
 	
-	public static final boolean modedebug = true;
-	public static final String debugPlayerName = "Xogador1";
+	private static final int porcentajeReinicioMatriz = 85;
+	private static final int diffPayoffRiesgo = 10;
+
+	
+	//Parámetros para habilitar el modo Debug. (Imprime comentarios)
+	public static boolean modedebug = true;
+	public static final String debugPlayerName = "Bruno";
 	
 //	private int miPos;				//Indica la posición del jugador actual de la matriz (0 el de menor id - Filas, 1 el de mayor id - Columnas)
 //	private int tuPos;				//Indica la posición del jugador contrario de la matriz (0 el de menor id - Filas, 1 el de mayor id - Columnas)
 	private int tipoXogo;			//Determina o tipo de xogo que iremos realizar
 	private int posXogadaAtaque;	//Esta será a posición que se decidirá xogar en caso de XogoAtaque.
+	private int posXogadaSeguro;	//Esta será a posición que se decidirá xogar en caso de XogoSeguro.
 	private int contXogadaCiclica;	//Conta as veces seguidas que levamos realizando unha xogada Cíclica.
 	
 	ArrayList<psi29_ColumRow> listColumRow = new ArrayList<psi29_ColumRow>();
@@ -49,7 +55,7 @@ public class psi29_Intelx extends psi29_Fixed {
 	/**
 	 * Constructor do axente Intelx, simplemente chama o constructor da clase Fixed e modifica o seu tipo por Intelixente.
 	 */
-	public psi29_Intelx() {
+	public psi29_Intel1() {
 		super();		
 		Tipo="Intelixente";
 		rand = new Random();
@@ -63,12 +69,20 @@ public class psi29_Intelx extends psi29_Fixed {
 	public int xogada() {
 			
 		int ret=0;
-				
+		
+//		modedebug = true;
+//		System.out.println("MaxMaxDiff: "+getMaxMaxDiff());
+//		System.out.println("MinMaxDiff: "+getMinMaxDiff());
+//		printMatriz();
+//		modedebug = false;
+		
+		
+		
 		//Dependendo do tipoXogo execturemos unha estratexia ou outra.
 		switch(tipoXogo) {
 		
 			case XogoSeguro:
-				ret = getMinMaxDiff();
+				ret = posXogadaSeguro;
 				printMSX("Vou gañando e podo asegurar a victoria xogando: "+ret);
 				break;
 				
@@ -97,12 +111,14 @@ public class psi29_Intelx extends psi29_Fixed {
 				printMSX("Xogo Dominante por posicións totais gañadas: "+ret);
 				break;
 				
-			case XogoMaxMinDiff:
-				ret = getMaxMinDiff();
+			case XogoMaxMaxDiff:
+				ret = getMaxMaxDiff();
+				printMSX("Xogo MaxMax por Diferencia: "+ret);
 				break;
 				
 			case XogoMinMaxDiff:
 				ret = getMinMaxDiff();
+				printMSX("Xogo MinMax por Diferencia: "+ret);
 				break;
 			
 			case XogoCompletar:
@@ -116,8 +132,8 @@ public class psi29_Intelx extends psi29_Fixed {
 				break;
 				
 			default:
-				ret = 0;
-				printMSX("Esto non deberia pasar. O tipo de xogo non existe");
+				ret = rand.nextInt(tamMatriz);
+				printMSX("Esto non deberia pasar. O tipo "+tipoXogo+" de xogo non existe");
 				break;
 				
 		}
@@ -212,7 +228,7 @@ public class psi29_Intelx extends psi29_Fixed {
 			return;
 		
 		//Se estamos xogando un xogo seguro non precisamos analizar nada.
-		if(tipoXogo==XogoSeguro)
+		if(tipoXogo==XogoSeguro && PagoParcial > PagoParcial_o)
 			return;
 		
 		//Se xoguei en ataque, pero perdin amplio a ventana de repetición para que sexa mais complicado. Se foi ben, baixamos o tamaño da ventana de repetición
@@ -225,99 +241,80 @@ public class psi29_Intelx extends psi29_Fixed {
 			}
 		}
 		
-		//Se a posición actual onde mais gaño non perdo, xogamos esa.
-		psi29_ColumRow posMaisGanhadas = Collections.max(listColumRow, new psi29_CompareGanhadas());
-		if(posMaisGanhadas.posganhadas > tamMatriz/2 && posMaisGanhadas.posPerdidas == 0) {
-			tipoXogo = XogoDominante2;
-			return;
-		}
-		
-		//Se entre os completos existe unha posición onde sempre gañamos xogaremos Dominante2.
-		ArrayList<psi29_ColumRow> completos;
-		completos = psi29_ColumRow.ColumRowComplete(listColumRow);
-		for(int i=0; i<completos.size(); i++) {
-			if(completos.get(i).posganhadas==tamMatriz-1){
-				tipoXogo = XogoDominante2;
-				return;
-			}
-				
-		}
-		
 		if(PagoParcial < PagoParcial_o) { //Vou perdendo
 			
-						
-			//Comprobamos se o opoñente repite unha xogada.
+			//Comprobamos se o opoñente repite unha xogada.	
 			int numMaisRepetidoContrincante = psi29_HistXogadas.numMaisRepetido(histXogadas, tamMatriz, 85);
-			if(numMaisRepetidoContrincante>=0) {
-				tipoXogo = XogoAtaque;
-			}
-			else {
+
+			//Se perdín as últimas PartidasPerdidasParaXogoCiclico  partidas activaremos o xogo cíclico.
+			if(psi29_HistXogadas.vecesPerdidasVentana(histXogadas)==psi29_HistXogadas.PartidasPerdidasParaXogoCiclico) {
 				
-				//Se perdín as últimas PartidasPerdidasParaXogoCiclico  partidas activaremos o xogo cíclico.
-				if(psi29_HistXogadas.vecesPerdidasVentana(histXogadas)==psi29_HistXogadas.PartidasPerdidasParaXogoCiclico) {
-					
-					//Se xa levo tempo xogando de maneira cíclica, activamos un xogo aleatorio
-					if(contXogadaCiclica>=psi29_HistXogadas.PartidasPerdidasParaXogoCiclico*2) {
-						tipoXogo=XogoAleatorio;
-					}
-					else {//En outro caso (Sempre que estemos nunha xogada de tipo cíclica), imos cambiando de xogada entre as cíclicas hasta que una dea resultado.
-						if(tipoXogo>=10) {
-							if(tipoXogo<ultimaXogadaCiclica)
-								tipoXogo++;
-							if(tipoXogo==ultimaXogadaCiclica)
-								tipoXogo=10;
-						}
-						else if(tipoXogo==XogoCompletar) {
-							tipoXogo=XogoDominante1;
-						}
-					}
-					contXogadaCiclica++;
+				//Se xa levo tempo xogando de maneira cíclica, activamos un xogo aleatorio
+				if(contXogadaCiclica>=psi29_HistXogadas.PartidasPerdidasParaXogoCiclico*2) {
+					tipoXogo=XogoAleatorio;
 				}
-				else {
-					contXogadaCiclica=0;
-					if(tipoXogo<10) { //Se imos perdendo pero non levamos perdidas moitas seguidas, activamos o xogo Dominante1.
-						tipoXogo=XogoDominante1;
-					}
-					else if(histXogadas.get(histXogadas.size()-1).perdido) { //Se non perdín a anterior xogada mellor cambiamos
+				else {//En outro caso (Sempre que estemos nunha xogada de tipo cíclica), imos cambiando de xogada entre as cíclicas hasta que una dea resultado.
+					if(tipoXogo>=10) {
 						if(tipoXogo<ultimaXogadaCiclica)
 							tipoXogo++;
 						if(tipoXogo==ultimaXogadaCiclica)
 							tipoXogo=10;
 					}
+					else if(tipoXogo==XogoCompletar) {
+						tipoXogo=XogoDominante1;
+					}
 				}
-				
+				contXogadaCiclica++;
 			}
-			
+			else if(numMaisRepetidoContrincante>=0) {//Comprobamos se o opoñente repite unha xogada. (Sempre que non levemos perdidas deamsiadas)
+				psi29_ColumRow xogContr = psi29_ColumRow.getColumRowByPosition(listColumRow, numMaisRepetidoContrincante);
+				if(xogContr.maxDiffPayoff==0 && !xogContr.isComplete(tamMatriz)) {//Se o contrincante repite unha Fila/Columna que está imcompleta completamos Matriz
+					tipoXogo = XogoCompletar;
+				}
+				else {
+					tipoXogo = XogoAtaque;
+					posXogadaAtaque = numMaisRepetidoContrincante;
+				}
+			}
+			else {
+				if(contXogadaCiclica==0) { //Se imos perdendo pero non levamos perdidas moitas seguidas, activamos o xogo Dominante1.
+					tipoXogo=XogoDominante1;
+				}
+				else if(histXogadas.get(histXogadas.size()-1).perdido) { //Se non perdín a anterior xogada mellor cambiamos, se si a perdín, volvo cambiar.
+					if(tipoXogo<ultimaXogadaCiclica)
+						tipoXogo++;
+					if(tipoXogo==ultimaXogadaCiclica)
+						tipoXogo=10;
+				}
+				contXogadaCiclica=0;
+
+			}		
 			
 		}
 		else {	//Vou gañando
 			if(numRondasPendentes<numCambMatriz) {		//Non vai haber mais cambios de matriz
 				
-				//Se xa está activo o XogoSeguro, podemos seguir con el, xa que non houbo ningún cambio.
-				if(tipoXogo==XogoSeguro)
-					return;
+//				//Se xa está activo o XogoSeguro, podemos seguir con el, xa que non houbo ningún cambio.
+//				if(tipoXogo==XogoSeguro)
+//					return;
 				
 				//Se imos gañando e a matriz non vai ter mais cambios, buscamos se existe algunha fila cuya diferencia de payoff máximo
 				//sexa inferior a diferencia de payofftotal entre o numero de rondas pendentes (Ademais de que esta fila/Columna estea completa)
 				//Se o encontramolo xogaremos esa Fila/Columna desta maneira asegurámos a victoria en esta Partida.
-				@SuppressWarnings("unchecked")
-				ArrayList<psi29_ColumRow> tempListColumRow = (ArrayList<psi29_ColumRow>) listColumRow.clone();
-
-				Collections.sort(tempListColumRow, new psi29_CompareMinDiffPayoff());
-				Collections.reverse(tempListColumRow);
 				
-				for(int i=0; i<tempListColumRow.size(); i++) {
+				for(int i=0; i<listColumRow.size(); i++) {
 					
-					if(tempListColumRow.get(i).minDiffPayoff*-1>=((float)diffPayoff/numRondasPendentes))
+					if(listColumRow.get(i).minDiffPayoff*-1>=((float)diffPayoff/numRondasPendentes))
 						continue;
 										
-					if(!tempListColumRow.get(i).isComplete(tamMatriz))
+					if(!listColumRow.get(i).isComplete(tamMatriz))
 						continue;
 					
 					tipoXogo = XogoSeguro;
-					printMSX("Activo xogo seguro");
-					break;
+					posXogadaSeguro = listColumRow.get(i).posColRow;
 					
+					printMSX("Activo xogo seguro");
+					break;				
 				}
 				
 			}
@@ -326,17 +323,48 @@ public class psi29_Intelx extends psi29_Fixed {
 			//Pode ser que existan cambios pendentes da matriz ou que non hai unha posición que nos asegure unha victoria
 			//Polo tanto intentaremos analizar o xogo para seguir gañando o maior payoff.
 			if(tipoXogo!=XogoSeguro) { //Non hai xogo seguro
+				
+				
+				
+				//Se a posición actual onde mais gaño non perdo, xogamos esa.
+				psi29_ColumRow posMaisGanhadas = Collections.max(listColumRow, new psi29_CompareGanhadas());
+				if(posMaisGanhadas.posganhadas > tamMatriz/2 && posMaisGanhadas.posPerdidas == 0) {
+					tipoXogo = XogoDominante2;
+					return;
+				}
+				
+				//Se entre os completos existe unha posición onde sempre gañamos xogaremos Dominante2.
+				ArrayList<psi29_ColumRow> completos;
+				completos = psi29_ColumRow.ColumRowComplete(listColumRow);
+				for(int i=0; i<completos.size(); i++) {
+					if(completos.get(i).posganhadas==tamMatriz-1){
+						tipoXogo = XogoDominante2;
+						return;
+					}
+						
+				}
+				
+				
+				
+				
 			
 				//Comprobamos se o opoñente repite unha xogada.
 				int numMaisRepetidoContrincante = psi29_HistXogadas.numMaisRepetido(histXogadas, tamMatriz, 85);
 				if(numMaisRepetidoContrincante>=0) {
 					tipoXogo = XogoAtaque;
+					posXogadaAtaque = numMaisRepetidoContrincante;
 				}
 				else { //Non hai xogo en ataque
 					
 					//Se existe unha posición que nunca perdamos xogamos esa.
 					if(Collections.max(listColumRow, new psi29_CompareGanhadas()).posganhadas >= tamMatriz-1) {
 						tipoXogo = XogoDominante2;
+						return;
+					}
+					
+					
+					if(diffPayoff<diffPayoffRiesgo) {
+						tipoXogo = XogoMinMaxDiff;
 						return;
 					}
 					
@@ -438,7 +466,8 @@ public class psi29_Intelx extends psi29_Fixed {
 	 */
 	public void cambioMatriz(int porCamMatriz) {
 		
-		if(porCambMatriz==100) {
+		if(porCambMatriz>=porcentajeReinicioMatriz) {
+			tipoXogo = XogoAleatorio;
 			//Resetea a matriz memorizada
 			for(int i=0; i<tamMatriz; i++) {
 				for(int j=0; j<tamMatriz; j++) {
@@ -519,12 +548,12 @@ public class psi29_Intelx extends psi29_Fixed {
 	}//fin getMinMaxDiff
 	
 	/**
-	 * Escolle a posición onde a diferencia de payoff (en positivo) mínima sexa a mais alta. Similar a un MaxMin
-	 * @return Devolve a posición da Fila/Columna onde a beneficio minimo sexa o maior.
+	 * Escolle a posición onde a diferencia de payoff (en positivo) máxima sexa a mais alta.
+	 * @return Devolve a posición da Fila/Columna onde a beneficio máximo sexa o maior.
 	 */
-	public int getMaxMinDiff() {
+	public int getMaxMaxDiff() {
 		return Collections.max(listColumRow, new psi29_CompareMaxDiffPayoff()).posColRow;
-	}//fin getMaxMinDiff
+	}//fin getMaxMaxDiff
 	
 	public int getDominantePorDiffPayoff() {
 		return Collections.max(listColumRow, new psi29_CompareDiffPayoff()).posColRow;

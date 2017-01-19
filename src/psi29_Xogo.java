@@ -623,7 +623,7 @@ public class psi29_Xogo implements Runnable {
 			xog2.addPartidaGanhada();
 		}
 		else {
-			engadirLog("Os xogadores "+xog1.getNome()+" e "+xog2.getNome()+" empataron a partida "+xog1.getRondasGanhadas()+" - "+xog2.getRondasGanhadas(), 1);
+			engadirLog("Os xogadores "+xog1.getNome()+" e "+xog2.getNome()+" empataron a partida "+xog1.getPagoParcial()+" - "+xog2.getPagoParcial(), 1);
 		}
 		
 		arbitro.finPartida(xog1, xog2);
