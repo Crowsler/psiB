@@ -5,7 +5,7 @@ import jade.core.AID;
  * Conterá as estadisticas de cada xogador do xogo.
  * 
  * @author Bruno Nogareda Da Cruz, brunonogareda@gmail.com
- * @version 0.2
+ * @version 1.0
  *
  */
 public class psi29_DatosXogador implements Comparable<psi29_DatosXogador> {

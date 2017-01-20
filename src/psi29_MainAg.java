@@ -13,7 +13,7 @@ import jade.lang.acl.ACLMessage;
  * Axente árbitro que se encarga de recibir, enviar mensaxes os diferentes axentes xogadores.
  * 
  * @author Bruno Nogareda Da Cruz, brunonogareda@gmail.com
- * @version 0.2
+ * @version 1.0
  *
  */
 @SuppressWarnings("serial")

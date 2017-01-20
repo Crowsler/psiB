@@ -7,7 +7,7 @@ import java.util.Random;
  * Este implementará unha función para devolver un valor aleatorio a unha xogada.
  * 
  * @author Bruno Nogareda Da Cruz, brunonogareda@gmail.com
- * @version 0.2
+ * @version 1.O
  *
  */
 public class psi29_Random extends psi29_Fixed {

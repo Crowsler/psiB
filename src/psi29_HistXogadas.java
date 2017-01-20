@@ -8,18 +8,18 @@ import java.util.ArrayList;
  * Isto permitenos levar un historico das xogadas.
  * 
  * @author Bruno Nogareda Da Cruz, brunonogareda@gmail.com
- * @version 0.2
+ * @version 1.0
  *
  */
 public class psi29_HistXogadas {
 
 	
-	//public static final int XogoDesconocido = -1;
-	public static final int VentanaRepeticionMIN = 5;
-	public static final int PartidasPerdidasParaXogoCiclico = 3;
+	public static final int VentanaRepeticionMIN = 5;				//Número mínimo para a ventana de repecións.
+	public static final int PartidasPerdidasParaXogoCiclico = 3;	//Partidas seguidas que debemos perder para habilitar o xogo cíclico.
 
 	
-	public static int VentanaRepeticion = 5;
+	public static int VentanaRepeticion = 5;						//Valor actual da ventana de repetición.
+	
 	int xogadaProp=0;
 	int xogadaCont=0;
 	boolean ganhado=false;
@@ -81,7 +81,11 @@ public class psi29_HistXogadas {
 	}//Fin numMaisRepetido
 	
 	
-	
+	/**
+	 * Conta o número de veces perdidas nun espacio de xogadas igual a ventana de partidas perdidas de xogo cíclico.
+	 * @param xogadas	lista de todas as xogadas
+	 * @return	número de veces perdidas no espacio de tempo da ventá
+	 */
 	public static int vecesPerdidasVentana(ArrayList<psi29_HistXogadas> xogadas) {
 		int contador=0;
 		for(int i=xogadas.size()-1; i>=0 && xogadas.size()-1-i<PartidasPerdidasParaXogoCiclico; i--) {
@@ -91,4 +95,4 @@ public class psi29_HistXogadas {
 		}
 		return contador;
 	}//fin vecesPerdidasEn	
-}
+}//Fin Clase psi29_HistXogadas

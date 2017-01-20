@@ -13,7 +13,7 @@ import jade.lang.acl.ACLMessage;
  * Calculará o movemento adecuado e intercambiará os mensaxes co arbitro do xogo.
  * 
  * @author Bruno Nogareda Da Cruz, brunonogareda@gmail.com
- * @version 0.2
+ * @version 1.0
  *
  */
 

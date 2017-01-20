@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  * Outras funcións mais própias do xogo chamarán a funcións da clase Xogo.
  * 
  * @author Bruno Nogareda Da Cruz, brunonogareda@gmail.com
- * @version 0.2
+ * @version 1.0
  *
  */
 public class psi29_Listener implements ActionListener, WindowListener, ItemListener {

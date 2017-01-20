@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  * Controlará a lóxica do xogo e almacenará os parámetros do mesmo
  * 
  * @author Bruno Nogareda Da Cruz, brunonogareda@gmail.com
- * @version 0.2
+ * @version 1.0
  *
  */
 public class psi29_Xogo implements Runnable {

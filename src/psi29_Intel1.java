@@ -11,7 +11,7 @@ import java.util.Random;
  * optará pola decisión mais adecuada.
  * 
  * @author Bruno Nogareda Da Cruz, brunonogareda@gmail.com
- * @version 0.2
+ * @version 1.0
  *
  */
 @SuppressWarnings("serial")
@@ -37,11 +37,9 @@ public class psi29_Intel1 extends psi29_Fixed {
 
 	
 	//Parámetros para habilitar el modo Debug. (Imprime comentarios)
-	public static boolean modedebug = true;
+	public static boolean modedebug = false;
 	public static final String debugPlayerName = "Bruno";
 	
-//	private int miPos;				//Indica la posición del jugador actual de la matriz (0 el de menor id - Filas, 1 el de mayor id - Columnas)
-//	private int tuPos;				//Indica la posición del jugador contrario de la matriz (0 el de menor id - Filas, 1 el de mayor id - Columnas)
 	private int tipoXogo;			//Determina o tipo de xogo que iremos realizar
 	private int posXogadaAtaque;	//Esta será a posición que se decidirá xogar en caso de XogoAtaque.
 	private int posXogadaSeguro;	//Esta será a posición que se decidirá xogar en caso de XogoSeguro.
@@ -70,15 +68,7 @@ public class psi29_Intel1 extends psi29_Fixed {
 	 */
 	public int xogada() {
 			
-		int ret=0;
-		
-//		modedebug = true;
-//		System.out.println("MaxMaxDiff: "+getMaxMaxDiff());
-//		System.out.println("MinMaxDiff: "+getMinMaxDiff());
-//		printMatriz();
-//		modedebug = false;
-		
-		
+		int ret=0;		
 		
 		//Dependendo do tipoXogo execturemos unha estratexia ou outra.
 		switch(tipoXogo) {
@@ -429,13 +419,9 @@ public class psi29_Intel1 extends psi29_Fixed {
 		
 		//Obtenemos nuestra posición en la matriz y la del contrario.
 		if(idXog1==Id) {
-//			miPos=0;
-//			tuPos=1;
 			Id_o = idXog2;
 		}
 		if(idXog2==Id) {
-//			miPos=1;
-//			tuPos=0;
 			Id_o = idXog1;
 		}
 		
@@ -486,7 +472,11 @@ public class psi29_Intel1 extends psi29_Fixed {
 		
 	}//cambioMatriz
 	
-	
+	/**
+	 * Función de testing do sistema.
+	 * En caso de estar activado o modo debug e que o player sexa o que vai debuguear, cando se chama a esta función imprime a matriz
+	 * que actualmente coñece o xogador así como os parámetros calculados para cada Fila/Columna
+	 */
 	public void printMatriz() {
 		if(!modedebug || !getLocalName().equals(debugPlayerName))
 			return;
@@ -510,7 +500,11 @@ public class psi29_Intel1 extends psi29_Fixed {
 		printMSX(matriz);
 	}
 	
-	
+	/**
+	 * Imprime un mensaxe, sempre e cando o modo debug esté habilitado e o axente sexa o do modo debug.
+	 * Utilizase para facer testing do sistema.
+	 * @param msx -> Mensaxe que se desexa imprimir
+	 */
 	public void printMSX(String msx) {
 		if(modedebug && getLocalName().equals(debugPlayerName))
 			System.out.println(msx);
@@ -554,15 +548,27 @@ public class psi29_Intel1 extends psi29_Fixed {
 		return Collections.max(listColumRow, new psi29_CompareMaxDiffPayoff()).posColRow;
 	}//fin getMaxMaxDiff
 	
+	/**
+	 * Escolle a posición onde a diferencia total de payoff é maior (o noso favor)
+	 * @return Posición da Fila/Columna con diferencia total de payoff maior.
+	 */
 	public int getDominantePorDiffPayoff() {
 		return Collections.max(listColumRow, new psi29_CompareDiffPayoff()).posColRow;
 	}//fin getDominantePorDiffPayoff
 	
+	/**
+	 * Escolle a fila/Columna onde se gañan mais posicións.
+	 * @return Posición da Fila/columna seleccionada.
+	 */
 	public int getDominantePorGanhadas() {
 		return Collections.max(listColumRow, new psi29_CompareGanhadas()).posColRow;
 	}//fin getDominantePorGanhadas
 	
 	
+	/**
+	 * Escolle de forma aleatoria entre todas as Filas/Columnas que non están completas.
+	 * @return Posición de unha fila/columna incompleta.
+	 */
 	public int getCompletar() {
 		ArrayList<psi29_ColumRow> incompletos;
 		incompletos = psi29_ColumRow.ColumRowInComplete(listColumRow);
@@ -572,7 +578,7 @@ public class psi29_Intel1 extends psi29_Fixed {
 			printMSX("Esto non deberia pasar. Solicitase completar a matriz pero está completa");
 			return 0;
 		}
-	}
+	}//fin getCompletar
 	
 	/**
 	 * Calcula a posición onde a diferencia de payoff sexa maior (en beneficio do xogador) en unha Columna/Fila en concreto
@@ -605,4 +611,4 @@ public class psi29_Intel1 extends psi29_Fixed {
 		return posPayoffMax;
 	}//Fin getMellor
 	
-}
+}//Fin Clase psi29_Intel1

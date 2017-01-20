@@ -1,4 +1,9 @@
 
+###################################################################################################################################
+# NOTA: Se adjunta un documento README.md en formato markdown con el mismo contenido que el readme.txt, para facilitar la lectura #                                                                                                 #
+###################################################################################################################################
+
+
 - Autor: Bruno Nogareda Da Cruz <brunonogareda@gmail.com>
 
 - Cuenta: psi29

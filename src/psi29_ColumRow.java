@@ -7,7 +7,7 @@ import java.util.Comparator;
  * Cada vez que se actualiza a matriz, debemos actualizar estos parámetros
  * 
  * @author Bruno Nogareda Da Cruz, brunonogareda@gmail.com
- * @version 0.2
+ * @version 1.0
  *
  */
 public class psi29_ColumRow{
@@ -29,23 +29,6 @@ public class psi29_ColumRow{
 	public psi29_ColumRow(int pos) {
 		posColRow=pos;
 	}
-	
-	/**
-	 * Devuelve un ArrayList con el número de Fila/Columnas que están incompletas.
-	 * @param ColumRow ArrayList de los parámetros Filas/Columnas
-	 * @return	ArrayList de números de Fila/Columnas incompletas.
-	 */
-//	public static ArrayList<Integer> ColumRowImComplete(ArrayList<psi29_ColumRow> ColumRow) {
-//		
-//		ArrayList<Integer> ret = new ArrayList<Integer>();
-//		
-//		for(int i=0; i<ColumRow.size(); i++) {
-//			if(!ColumRow.get(i).isComplete(ColumRow.size()))
-//				ret.add(i);
-//		}
-//		return ret;
-//	}
-	
 	
 	/**
 	 * Devolve un ArrayList coas Filas/Columnas que están imcompletas.
@@ -77,12 +60,12 @@ public class psi29_ColumRow{
 				ret.add(ColumRow.get(i));
 		}
 		return ret;
-	}
+	}//ColumRowComplete
 	
 	/**
-	 * Actualiza los parámetros de la lista de Filas/Columnas
+	 * Actualiza os parámetros da lista de Filas/Columnas
 	 * @param ColumRow	Lista de parámetros a actualizar
-	 * @param tamMatriz	Tamaño de la matriz
+	 * @param tamMatriz	Tamaño da matriz
 	 * @param Matriz	Matriz
 	 */
 	public static void actualizaColuRowParametros(ArrayList<psi29_ColumRow> ColumRow, int tamMatriz, int[][][] Matriz) {
@@ -91,13 +74,13 @@ public class psi29_ColumRow{
 			ColumRow.get(i).actualizaParametros(tamMatriz, Matriz);
 		}
 		
-	}
+	}//actualizaColumRowParametros
 	
 	/**
-	 * Obtiene los parámetros de una Fila/Columna a partir de su posición
-	 * @param ColumRow	ArrayList de Fila/Columna
-	 * @param position	Posición de la Fila/Columna que estamos buscando
-	 * @return	Fila/Columna que pertenece a la posición pasada-
+	 * Obtén os parámetros de unha Fila/Columna a partir da súa posición
+	 * @param ColumRow	ArrayList de Filas/Columnas
+	 * @param position	Posición da Fila/Columna que estamos buscando
+	 * @return	Fila/Columna que pertence a posición pasada
 	 */
 	public static psi29_ColumRow getColumRowByPosition(ArrayList<psi29_ColumRow> ColumRow, int position) {
 		
@@ -107,12 +90,12 @@ public class psi29_ColumRow{
 			}
 		}
 		return null;
-		
-	}
+	}//getColumRowByPosition
+	
 	
 	/**
-	 * Actualiza los parámetros de la Fila/Columna en concreto
-	 * @param tamMatriz	Tamaño de la matriz
+	 * Actualiza os parámetros da Fila/Columna en concreto
+	 * @param tamMatriz	Tamaño da matriz
 	 * @param Matriz	Matriz
 	 */
 	public void actualizaParametros(int tamMatriz, int[][][] Matriz) {
@@ -156,11 +139,9 @@ public class psi29_ColumRow{
 			}
 			
 		}
-		
 		minCobro=tempMinCobro;
 		maxPago=tempMaxPago;
-		
-	}
+	}//actualizaParametros
 
 	public int getDiffPayoff() {
 		return diffPayoff;
@@ -195,7 +176,7 @@ public class psi29_ColumRow{
 	}
 	
 	/**
-	 * Comprueba si esta Fila/Columna está completa
+	 * Comprueba se esta Fila/Columna está completa
 	 * @param tamMatriz Tamaño de la matriz
 	 * @return	True si está completa, False si está incompleta
 	 */
@@ -204,10 +185,10 @@ public class psi29_ColumRow{
 			return true;
 		else
 			return false;
-	}
+	}//isComplete
 
 	/**
-	 * Pone los parámetros básicos de la Fila/Columna a 0.
+	 * Pon os parámetros básicos da Fila/Columna a 0.
 	 */
 	public void restart() {
 		diffPayoff=0;
@@ -220,10 +201,10 @@ public class psi29_ColumRow{
 		posMaxDiffPayoff=0;
 		minCobro=0;
 		maxPago=0;
-	}
+	}//restart
 	
 	/**
-	 * Retorna un String visible con los parámetros de la Fila/Columna entre paréntesis.
+	 * Retorna un String visible cos parámetros da Fila/Columna entre paréntesis.
 	 */
 	public String toString() {
 		String ret="";
@@ -236,12 +217,8 @@ public class psi29_ColumRow{
 		ret+=posPerdidas;
 		ret+=", ";
 		ret+=maxDiffPayoff;
-//		ret+=", ";
-//		ret+=posMaxDiffPayoff;
 		ret+=", ";
 		ret+=minDiffPayoff;
-//		ret+=", ";
-//		ret+=posMinDiffPayoff;
 		ret+=", ";
 		ret+=minCobro;
 		ret+=", ";
@@ -249,17 +226,17 @@ public class psi29_ColumRow{
 		ret+=")";
 				
 		return ret;
-	}
+	}//toString	
 	
-}
+}//Fin Clase psi29_ColumRow
 
 
 /**
  * 
- * Clase que permite comparar las Filas/Columnas por el número de posiciones ganadas, en caso de igualdad comprueba la posiciones perdidas y finalmente la diferencia de payoff total
+ * Clase que permite comparar as Filas/Columnas polo número de posiciones ganadas, en caso de igualdade comproba as posicións perdidas e finalmente a diferencia de payoff total
  * 
  * @author Bruno Nogareda Da Cruz, brunonogareda@gmail.com
- * @version 0.2
+ * @version 1.0
  *
  */
 class psi29_CompareGanhadas implements Comparator<psi29_ColumRow> {
@@ -273,14 +250,14 @@ class psi29_CompareGanhadas implements Comparator<psi29_ColumRow> {
 		if(o1.getDiffPayoff()<o2.diffPayoff) return -1;
 		return 0;
 	}
-}
+}//Fin Clase psi29_CompareGanhadas
 
 /**
  * 
- * Clase que permite comparar las Filas/Columnas por la diferencia total de payoff, en caso de igualdad por el número de posiciones ganadas y finalmente por las posiciones perdidas.
+ * Clase que permite comparar as Filas/Columnas pola diferencia total de payoff, en caso de igualdade plo número de posicións gañadas e finalmente polas posicións perdidas.
  * 
  * @author Bruno Nogareda Da Cruz, brunonogareda@gmail.com
- * @version 0.2
+ * @version 1.0
  *
  */
 class psi29_CompareDiffPayoff implements Comparator<psi29_ColumRow> {
@@ -294,14 +271,14 @@ class psi29_CompareDiffPayoff implements Comparator<psi29_ColumRow> {
 		if(o1.getPosPerdidas()>o2.posPerdidas) return -1;
 		return 0;
 	}
-}
+}//Fin Clase psi29_CompareDiffPayoff
 
 /**
  * 
- * Clase que permite comparar las Filas/Columnas por la diferencia máxima de payoff que existe en cada uno
+ * Clase que permite comparar as Filas/Columnas pola diferencia máxima de payoff que existe en cada un
  * 
  * @author Bruno Nogareda Da Cruz, brunonogareda@gmail.com
- * @version 0.2
+ * @version 1.0
  *
  */
 class psi29_CompareMaxDiffPayoff implements Comparator<psi29_ColumRow> {
@@ -310,14 +287,14 @@ class psi29_CompareMaxDiffPayoff implements Comparator<psi29_ColumRow> {
 	public int compare(psi29_ColumRow o1, psi29_ColumRow o2) {
 		return o1.maxDiffPayoff > o2.maxDiffPayoff ? 1 : o2.maxDiffPayoff==o1.maxDiffPayoff ? 0 : -1;
 	}
-}
+}//Fin Clase psi29_CompareMaxDiffPayoff
 
 /**
  * 
- * Clase que permite comparar las Filas/Columnas por la diferencia mínima de payoff que existe en cada uno
+ * Clase que permite comparar as Filas/Columnas pola diferencia mínima de payoff que existe en cada un
  * 
  * @author Bruno Nogareda Da Cruz, brunonogareda@gmail.com
- * @version 0.2
+ * @version 1.0
  *
  */
 class psi29_CompareMinDiffPayoff implements Comparator<psi29_ColumRow> {
@@ -327,14 +304,14 @@ class psi29_CompareMinDiffPayoff implements Comparator<psi29_ColumRow> {
 
 		return o1.minDiffPayoff > o2.minDiffPayoff ? 1 : o2.minDiffPayoff==o1.minDiffPayoff ? 0 : -1;
 	}
-}
+}//Fin Clase psi29_CompareMinDiffPayoff
 
 /**
  * 
  * Clase que permite comparar as Filas/Columnas por o cobro mínimo que existe en cada un
  * 
  * @author Bruno Nogareda Da Cruz, brunonogareda@gmail.com
- * @version 0.2
+ * @version 1.0
  *
  */
 class psi29_CompareMaxMin implements Comparator<psi29_ColumRow> {
@@ -344,15 +321,14 @@ class psi29_CompareMaxMin implements Comparator<psi29_ColumRow> {
 
 		return o1.minCobro > o2.minCobro ? 1 : o2.minCobro==o1.minCobro ? 0 : -1;
 	}
-	
-}
+}//Fin Clase psi29_CompareMaxMin
 
 /**
  * 
  * Clase que permite comparar as Filas/Columnas por o pago máximo que existe en cada un
  * 
  * @author Bruno Nogareda Da Cruz, brunonogareda@gmail.com
- * @version 0.2
+ * @version 1.0
  *
  */
 class psi29_CompareMinMax implements Comparator<psi29_ColumRow> {
@@ -363,4 +339,4 @@ class psi29_CompareMinMax implements Comparator<psi29_ColumRow> {
 
 		return o1.maxPago < o2.maxPago ? 1 : o2.maxPago==o1.maxPago ? 0 : -1;
 	}
-}
+}//FinClase psi29_CompareMinMax

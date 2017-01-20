@@ -43,7 +43,7 @@ public class psi29_Xanela extends Frame {
 	public final static String nomeAPP="NeoMatrix";
 	public final static String autorAPP="Bruno Nogareda Da Cruz";
 	public final static String mailAutorAPP="brunonogareda@gmail.com";
-	public final static String versionAPP="0.2";
+	public final static String versionAPP="1.0";
 	
 	//Parámetros fixos da venta
 	private final static int xanelaAncho = 950;
