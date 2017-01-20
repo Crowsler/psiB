@@ -30,10 +30,10 @@ public class psi29_Intel1 extends psi29_Fixed {
 	public static final int XogoMaxMaxDiff = 14;
 	public static final int XogoMinMaxDiff = 15;
 	
-	private static final int ultimaXogadaCiclica = 15;
+	private static final int ultimaXogadaCiclica = 13;
 	
-	private static final int porcentajeReinicioMatriz = 85;
-	private static final int diffPayoffRiesgo = 10;
+	private static final int porcentajeReinicioMatriz = 75;
+	private static final int diffPayoffRiesgo = 0;
 
 	
 	//Parámetros para habilitar el modo Debug. (Imprime comentarios)
@@ -316,8 +316,6 @@ public class psi29_Intel1 extends psi29_Fixed {
 			//Pode ser que existan cambios pendentes da matriz ou que non hai unha posición que nos asegure unha victoria
 			//Polo tanto intentaremos analizar o xogo para seguir gañando o maior payoff.
 			if(tipoXogo!=XogoSeguro) { //Non hai xogo seguro
-				
-				
 				
 				//Se a posición actual onde mais gaño non perdo, xogamos esa.
 				psi29_ColumRow posMaisGanhadas = Collections.max(listColumRow, new psi29_CompareGanhadas());

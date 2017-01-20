@@ -285,7 +285,13 @@ class psi29_CompareMaxDiffPayoff implements Comparator<psi29_ColumRow> {
 
 	@Override
 	public int compare(psi29_ColumRow o1, psi29_ColumRow o2) {
-		return o1.maxDiffPayoff > o2.maxDiffPayoff ? 1 : o2.maxDiffPayoff==o1.maxDiffPayoff ? 0 : -1;
+		if(o1.maxDiffPayoff > o2.maxDiffPayoff) return 1;
+		if(o1.maxDiffPayoff < o2.maxDiffPayoff) return -1;
+		if(o1.getPosganhadas()>o2.posganhadas) return 1;
+		if(o1.getPosganhadas()<o2.posganhadas) return -1;
+		if(o1.getPosPerdidas()<o2.posPerdidas) return 1;
+		if(o1.getPosPerdidas()>o2.posPerdidas) return -1;
+		return 0;
 	}
 }//Fin Clase psi29_CompareMaxDiffPayoff
 
@@ -301,8 +307,13 @@ class psi29_CompareMinDiffPayoff implements Comparator<psi29_ColumRow> {
 
 	@Override
 	public int compare(psi29_ColumRow o1, psi29_ColumRow o2) {
-
-		return o1.minDiffPayoff > o2.minDiffPayoff ? 1 : o2.minDiffPayoff==o1.minDiffPayoff ? 0 : -1;
+		if(o1.minDiffPayoff > o2.minDiffPayoff) return 1;
+		if(o1.minDiffPayoff < o2.minDiffPayoff) return -1;
+		if(o1.getPosganhadas()>o2.posganhadas) return 1;
+		if(o1.getPosganhadas()<o2.posganhadas) return -1;
+		if(o1.getPosPerdidas()<o2.posPerdidas) return 1;
+		if(o1.getPosPerdidas()>o2.posPerdidas) return -1;
+		return 0;
 	}
 }//Fin Clase psi29_CompareMinDiffPayoff
 
@@ -339,4 +350,4 @@ class psi29_CompareMinMax implements Comparator<psi29_ColumRow> {
 
 		return o1.maxPago < o2.maxPago ? 1 : o2.maxPago==o1.maxPago ? 0 : -1;
 	}
-}//FinClase psi29_CompareMinMax
+}//Fin Clase psi29_CompareMinMax

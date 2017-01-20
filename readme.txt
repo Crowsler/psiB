@@ -21,6 +21,8 @@ ______________________________________________________________________________
 
 - Descripción del algoritmo del jugador inteligente:
 
+	Se utilizará el único agente inteligente entregado psi29_Intel1
+
 	Este tiene programadas una serie de jugadas de diferente tipo que se aplicarán según el estado de la partida, jugadas anteriores, etc.
 
 	  * Juego aleatorio: Tal y como su nombre indica, consiste en escoger un número (de 0 hasta el tamaño de la matriz) de forma aleatoria.
